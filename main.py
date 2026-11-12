@@ -2,7 +2,7 @@
 Puente entre la cocina (pedido.py) y la página web.
 
 PyScript ejecuta este archivo con MicroPython dentro del navegador:
-pinta la carta con sus precios y prepara el botón de "pedido sorpresa".
+pinta la carta con sus precios y prepara el botón que simula pedidos para el cocinero.
 """
 
 import random
@@ -150,6 +150,6 @@ pintar_carta()
 
 boton = document.getElementById("boton-pedido")
 boton.disabled = False
-boton.querySelector(".boton__texto").textContent = "Generar pedido al azar"
-document.getElementById("estado-python").textContent = "Python listo en la cocina"
+boton.querySelector(".boton__texto").textContent = "Simular un pedido"
+document.getElementById("estado-python").textContent = "Python listo: esperando pedidos"
 document.body.classList.add("python-listo")

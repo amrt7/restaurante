@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>5 estrellas, a comer</title>
-  <meta name="description" content="La carta del restaurante 5 estrellas, a comer: pizzas a tu gusto, tartas de cumpleaños, helados y fruta por kilos. Con generador de pedidos sorpresa en Python.">
+  <meta name="description" content="La carta del restaurante 5 estrellas, a comer: pizzas a tu gusto, tartas de cumpleaños, helados y fruta por kilos. Con simulador de pedidos en Python para jugar a cocinar.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -223,7 +223,7 @@
       color: var(--ash); text-transform: uppercase;
     }
 
-    /* ---------- Pedido sorpresa ---------- */
+    /* ---------- Simulador de pedidos ---------- */
     .sorpresa { background: var(--corten); color: var(--sandstone); }
     .sorpresa .envoltorio {
       display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
@@ -326,7 +326,7 @@
       <a class="marca" href="#">5 <b>estrellas</b>, a comer</a>
       <nav aria-label="Principal">
         <a href="#carta">La carta</a>
-        <a href="#sorpresa">Pedido sorpresa</a>
+        <a href="#simulador">Simular pedido</a>
       </nav>
     </div>
   </header>
@@ -340,11 +340,12 @@
           <h1>5 estrellas,<em>a comer.</em></h1>
           <p class="portada__texto">
             Pizzas que montas tú, tartas con velas, helados de los de siempre y fruta
-            recién cortada al peso. Pide lo que quieras… o deja que la cocina elija por ti.
+            recién cortada al peso. Aquí se cocina todo al momento: en cuanto entra un pedido,
+            el cocinero se pone manos a la obra.
           </p>
           <div class="portada__acciones">
             <a class="boton" href="#carta">Ver la carta</a>
-            <a class="boton" href="#sorpresa">Pedido sorpresa</a>
+            <a class="boton" href="#simulador">Simular un pedido</a>
           </div>
           <div class="portada__datos mono">
             <span>Abierto hoy 13:00–23:00</span>
@@ -399,7 +400,7 @@
               <path d="M40 66 c3 -3 6 0 9 -3"/>
               <path d="M76 48 c2 2 5 1 6 -1"/>
             </svg>
-            <p class="tarjeta__num mono">01 · Del horno</p>
+            <p class="tarjeta__num mono">Del horno</p>
             <h3>Pizza para personalizar</h3>
             <div class="tarjeta__cuerpo" id="carta-pizza"></div>
           </article>
@@ -416,7 +417,7 @@
               <path d="M78 36 c-4 -5 0 -10 0 -12 c0 2 4 7 0 12 z"/>
               <circle cx="40" cy="88" r="3"/><circle cx="60" cy="90" r="3"/><circle cx="80" cy="88" r="3"/>
             </svg>
-            <p class="tarjeta__num mono">02 · De celebración</p>
+            <p class="tarjeta__num mono">De celebración</p>
             <h3>Tarta de cumpleaños</h3>
             <div class="tarjeta__cuerpo" id="carta-tarta"></div>
           </article>
@@ -431,7 +432,7 @@
               <path d="M58 30 C58 22 66 18 70 20"/>
               <circle cx="60" cy="12" r="4"/>
             </svg>
-            <p class="tarjeta__num mono">03 · Del congelador</p>
+            <p class="tarjeta__num mono">Del congelador</p>
             <h3>Helados</h3>
             <div class="tarjeta__cuerpo" id="carta-helados"></div>
           </article>
@@ -446,7 +447,7 @@
               <path d="M90 62 l-6 2 M94 76 l-6 2 M98 90 l-5 2"/>
               <path d="M82 50 C76 40 78 32 84 28 M84 50 C86 38 92 32 98 32 M86 50 C92 44 100 44 104 46"/>
             </svg>
-            <p class="tarjeta__num mono">04 · Del mercado · por kilos</p>
+            <p class="tarjeta__num mono">Del mercado · por kilos</p>
             <h3>Frutas y verduras para comer ya</h3>
             <div class="tarjeta__cuerpo" id="carta-frutas"></div>
           </article>
@@ -456,16 +457,17 @@
       </div>
     </section>
 
-    <!-- ================= PEDIDO SORPRESA ================= -->
-    <section class="seccion sorpresa" id="sorpresa">
+    <!-- ================= SIMULADOR DE PEDIDOS ================= -->
+    <section class="seccion sorpresa" id="simulador">
       <div class="envoltorio">
         <div class="sorpresa__texto">
-          <p class="ceja">¿No sabes qué pedir?</p>
-          <h2 class="titular">Pedido sorpresa</h2>
+          <p class="ceja">Zona del cocinero</p>
+          <h2 class="titular">Simulador de pedidos</h2>
           <p>
-            Pulsa el botón y la cocina, que funciona con <strong>Python</strong>,
-            elegirá al azar entre una y cuatro cosas de la carta: ingredientes de la pizza,
-            toppings, kilos de fruta y salsas incluidos. Cada comanda es distinta.
+            ¡A jugar a cocinar! Pulsa el botón y llegará a cocina un pedido inventado con
+            <strong>Python</strong>, como si un cliente acabara de pedir: entre una y cuatro cosas
+            de la carta, con los ingredientes de la pizza, los toppings, los kilos de fruta y las
+            salsas elegidos al azar. Prepáralo y pide el siguiente.
           </p>
           <button class="boton" id="boton-pedido" type="button" disabled>
             <svg class="boton__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
@@ -485,7 +487,7 @@
             <path d="M42 34 H78 M42 48 H72 M42 62 H78 M42 80 H62"/>
             <path d="M70 80 H78"/>
           </svg>
-          <p>Aquí aparecerá tu comanda.<br>La cocina espera tu señal.</p>
+          <p>Aquí llegarán las comandas.<br>Cocina en espera.</p>
         </div>
       </div>
     </section>
