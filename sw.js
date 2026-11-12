@@ -1,7 +1,7 @@
 // Service worker de "5 estrellas, a comer".
 // Guarda la web, PyScript, MicroPython y las fuentes para poder jugar sin conexión.
 // Si cambias algo importante, sube el número de versión para renovar la caché.
-const CACHE = 'cocina-v1';
+const CACHE = 'cocina-v2';
 const PROPIOS = [
   './',
   './index.html',
