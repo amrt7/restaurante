@@ -46,3 +46,23 @@ Edita las listas del principio de `pedido.py` (`PIZZA`, `TARTA`, `HELADOS`, `FRU
 2. En **Build and deployment → Source**, elige **Deploy from a branch**.
 3. En **Branch**, elige la rama donde está la web y la carpeta **/ (root)**, y pulsa **Save**.
 4. Espera uno o dos minutos: la web quedará en <https://amrt7.github.io/restaurante/>.
+
+## Instalarla como app (iPad y móvil)
+
+La web es una **app instalable (PWA)**: se abre a pantalla completa, con su propio icono,
+y funciona **sin conexión** después de abrirla una vez con internet.
+
+- **iPad / iPhone:** abre la web en **Safari** → botón **Compartir** → **Añadir a pantalla de inicio**.
+- **Android:** abre la web en **Chrome** → menú **⋮** → **Instalar app** (o *Añadir a pantalla de inicio*).
+
+Archivos de la app:
+
+| Archivo                | Qué hace |
+|------------------------|----------|
+| `manifest.webmanifest` | Nombre, colores e iconos de la app. |
+| `sw.js`                | Guarda la web, PyScript y MicroPython para usarla sin conexión. |
+| `iconos/`              | Iconos para la pantalla de inicio. |
+
+En iPad (por ejemplo, el iPad 10) en vertical la carta se ve a dos columnas y el simulador
+deja el botón junto a la comanda. En móvil y en la app instalada aparece una barra de
+pestañas abajo para saltar entre **La carta** y **Simular pedido**.

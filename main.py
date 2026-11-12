@@ -8,6 +8,7 @@ pinta la carta con sus precios y prepara el botón que simula pedidos para el co
 import random
 
 from pyscript import document, when, window
+from pyscript.ffi import to_js
 
 import pedido
 from pedido import euros
@@ -137,6 +138,9 @@ def pintar_comanda(p):
     # Forzamos un reflow para que la animación de entrada se repita.
     _ = comanda.offsetWidth
     comanda.classList.add("comanda--entra")
+    # En el móvil la comanda queda debajo del botón: la acercamos a la vista.
+    if int(window.innerWidth) <= 600:
+        comanda.scrollIntoView(to_js({"behavior": "smooth", "block": "center"}))
 
 
 @when("click", "#boton-pedido")
@@ -153,3 +157,6 @@ boton.disabled = False
 boton.querySelector(".boton__texto").textContent = "Simular un pedido"
 document.getElementById("estado-python").textContent = "Python listo: esperando pedidos"
 document.body.classList.add("python-listo")
+
+# Avisamos a la página para que guarde todo y funcione sin conexión.
+window.cocinaLista()

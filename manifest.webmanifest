@@ -1,0 +1,17 @@
+{
+  "name": "5 estrellas, a comer",
+  "short_name": "5 estrellas",
+  "description": "La carta del restaurante y el simulador de pedidos para jugar a cocinar.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#b84b30",
+  "theme_color": "#b84b30",
+  "icons": [
+    { "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

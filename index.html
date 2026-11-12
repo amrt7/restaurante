@@ -2,7 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- App instalable (PWA) para iPad y móvil -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#b84b30">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="5 estrellas">
+  <link rel="apple-touch-icon" href="./iconos/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./iconos/icono-192.png">
   <title>5 estrellas, a comer</title>
   <meta name="description" content="La carta del restaurante 5 estrellas, a comer: pizzas a tu gusto, tartas de cumpleaños, helados y fruta por kilos. Con simulador de pedidos en Python para jugar a cocinar.">
 
@@ -47,6 +57,8 @@
       font-size: 16px;
       line-height: 1.35;
       -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
     }
     img, svg { display: block; max-width: 100%; }
     ul, ol { margin: 0; padding: 0; list-style: none; }
@@ -68,9 +80,11 @@
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
-      transition: letter-spacing .25s ease, opacity .2s ease;
+      touch-action: manipulation;
+      transition: letter-spacing .25s ease, opacity .2s ease, transform .1s ease;
     }
     .boton:hover:not(:disabled) { letter-spacing: 0.09em; }
+    .boton:active:not(:disabled) { transform: scale(.97); }
     .boton:focus-visible { outline: 2px dashed currentColor; outline-offset: 4px; }
     .boton:disabled { opacity: .55; cursor: progress; }
     .boton__icono { width: 18px; height: 18px; flex: none; }
@@ -82,7 +96,7 @@
     }
     .barra .envoltorio {
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding-top: 24px; padding-bottom: 24px;
+      padding-top: calc(24px + env(safe-area-inset-top)); padding-bottom: 24px;
     }
     .marca {
       font-size: 22px; font-style: italic; color: inherit; text-decoration: none;
@@ -297,18 +311,61 @@
     }
     .pie .marca { color: var(--corten); font-size: 28px; }
     .pie p { font-size: 13px; color: var(--smoke); text-transform: uppercase; }
+    .pie .instalar { flex-basis: 100%; text-transform: none; font-family: var(--texto); font-size: 14px; color: var(--ash); }
+    @media (display-mode: standalone) { .pie .instalar { display: none; } }
+
+    /* ---------- Barra de pestañas (móvil, iPad y app instalada) ---------- */
+    .pestanas { display: none; }
+    @media (max-width: 960px), (display-mode: standalone) {
+      .pestanas {
+        position: fixed; inset: auto 0 0 0; z-index: 10;
+        display: grid; grid-template-columns: 1fr 1fr;
+        background: var(--sandstone);
+        border-top: 1px solid var(--driftwood);
+        padding: 6px max(12px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      }
+      .pestanas a {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        min-height: 52px; justify-content: center;
+        color: var(--smoke); text-decoration: none;
+        font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+        border-radius: var(--radio);
+        touch-action: manipulation;
+      }
+      .pestanas a svg { width: 24px; height: 24px; }
+      .pestanas a[aria-current="true"] { color: var(--corten); }
+      .pie { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+      .seccion { scroll-margin-top: 0; }
+    }
 
     /* ---------- Adaptación a pantallas ---------- */
-    @media (max-width: 960px) {
-      .tarjeta--ancha, .tarjeta--estrecha { grid-column: 1 / -1; }
-      .portada .envoltorio, .sorpresa .envoltorio { grid-template-columns: 1fr; }
-      .sello { width: min(80%, 380px); margin: 0 auto; }
-      .comanda { justify-self: center; }
+    .envoltorio {
+      padding-left: max(var(--lado), env(safe-area-inset-left));
+      padding-right: max(var(--lado), env(safe-area-inset-right));
     }
+    /* Tablets como el iPad 10 en vertical (820 px) */
+    @media (max-width: 960px) {
+      :root { --lado: 32px; }
+      .tarjeta--ancha, .tarjeta--estrecha { grid-column: span 6; }
+      .tarjeta { padding: 24px; grid-template-columns: 80px 1fr; gap: 6px 20px; }
+      .tarjeta__dibujo { width: 80px; height: 80px; }
+      .tarjeta h3 { font-size: 20px; }
+      .platos--dos { grid-template-columns: 1fr; }
+      .portada { min-height: auto; padding: calc(112px + env(safe-area-inset-top)) 0 72px; }
+      .portada .envoltorio { grid-template-columns: 1fr; }
+      .sello { width: min(70%, 360px); margin: 0 auto; }
+      .sorpresa .envoltorio { gap: 32px; }
+      .sorpresa__texto p { font-size: 16px; }
+      .comanda { padding: 24px; }
+    }
+    /* Móviles */
     @media (max-width: 600px) {
-      :root { --hueco: 56px; }
+      :root { --hueco: 56px; --lado: 16px; }
+      .tarjeta--ancha, .tarjeta--estrecha { grid-column: 1 / -1; }
+      .sorpresa .envoltorio { grid-template-columns: 1fr; }
+      .comanda { justify-self: center; }
       .barra nav { display: none; }
-      .portada { padding-top: 96px; }
+      .portada { padding: calc(96px + env(safe-area-inset-top)) 0 56px; }
       .tarjeta { padding: 22px; grid-template-columns: 72px 1fr; gap: 6px 18px; }
       .tarjeta__dibujo { width: 72px; height: 72px; }
       .tarjeta h3 { font-size: 20px; }
@@ -497,8 +554,58 @@
     <div class="envoltorio">
       <a class="marca" href="#">5 <b>estrellas</b>, a comer</a>
       <p class="mono">Calle de la Imaginación, 5 · Cocina con Python</p>
+      <p class="instalar">Para tenerla como app en el iPad o el móvil: en Safari toca Compartir y luego «Añadir a pantalla de inicio».</p>
     </div>
   </footer>
+
+  <!-- Pestañas inferiores: se ven en móvil, iPad y en la app instalada -->
+  <nav class="pestanas" aria-label="Secciones">
+    <a href="#carta" data-seccion="carta" aria-current="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 3v8a2 2 0 0 0 2 2v8M9 3v8a2 2 0 0 1-2 2M7 3v6"/>
+        <path d="M17 21V3c-2.5 1-4 3.5-4 7v3h4"/>
+      </svg>
+      La carta
+    </a>
+    <a href="#simulador" data-seccion="simulador">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2h12v20l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 22z"/>
+        <path d="M9 7h6M9 11h6M9 15h3"/>
+      </svg>
+      Simular pedido
+    </a>
+  </nav>
+
+  <script>
+    // Pestaña activa según la sección visible.
+    (function () {
+      var enlaces = document.querySelectorAll('.pestanas a');
+      var simulador = document.getElementById('simulador');
+      function marcar() {
+        var enSimulador = simulador.getBoundingClientRect().top < window.innerHeight * 0.55;
+        enlaces.forEach(function (a) {
+          a.setAttribute('aria-current', String((a.dataset.seccion === 'simulador') === enSimulador));
+        });
+      }
+      window.addEventListener('scroll', marcar, { passive: true });
+      window.addEventListener('resize', marcar);
+      marcar();
+    })();
+
+    // Modo sin conexión: el service worker guarda la web, PyScript y MicroPython.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    }
+    // main.py llama a esta función cuando Python ya está listo.
+    window.cocinaLista = function () {
+      if (!('serviceWorker' in navigator)) return;
+      navigator.serviceWorker.ready.then(function (reg) {
+        var urls = performance.getEntriesByType('resource').map(function (e) { return e.name; });
+        urls.push(location.href.split('#')[0]);
+        if (reg.active) reg.active.postMessage({ tipo: 'guardar', urls: urls });
+      }).catch(function () {});
+    };
+  </script>
 
   <!-- La cocina: MicroPython carga pedido.py y ejecuta main.py -->
   <script type="mpy" src="./main.py" config='{"files": {"./pedido.py": ""}}'></script>
